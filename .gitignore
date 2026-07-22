@@ -1,0 +1,30 @@
+# Build
+**/build/
+**/out/
+**/.gradle/
+**/cmake-build-*/
+**/.idea/
+**/.vscode/
+**/*.iml
+**/.DS_Store
+
+# Native / C++
+**/CMakeCache.txt
+**/CMakeFiles/
+**/cmake_install.cmake
+**/Makefile
+**/*.o
+**/*.a
+**/*.dylib
+**/*.exe
+**/*.obj
+
+# Java
+**/*.class
+**/.classpath
+**/.project
+**/.settings/
+
+# Secrets
+.env
+*.pem

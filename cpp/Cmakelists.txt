@@ -1,0 +1,49 @@
+cmake_minimum_required(VERSION 3.10)
+
+
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
+project(SunnyLand)
+
+set(CMAKE_CXX_STANDARD 17)
+
+set(glfw3_DIR "${CMAKE_CURRENT_SOURCE_DIR}vcpkg/installed/x64-windows/share/glfw3")
+set(glad_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/installed/x64-windows/share/glad")
+set(glm_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/installed/x64-windows/share/glm")
+
+# Ищем пакеты
+find_package(glfw3 REQUIRED)
+find_package(glad REQUIRED) 
+find_package(glm REQUIRED)
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+add_executable(game 
+main.cpp 
+src/window.cpp 
+src/GameObject.cpp 
+src/TextureLoader.cpp 
+src/Cursor.cpp 
+src/shaders.cpp 
+)
+#add_executable(game test.cpp)
+#Штука чтобы игра без консоли запускалась ↓
+#if(WIN32)
+#    # Делаем оконным приложением без консоли
+#    set_target_properties(game PROPERTIES
+#        WIN32_EXECUTABLE TRUE
+#        # Явно указываем, что используем main, а не WinMain
+#        LINK_FLAGS "/ENTRY:mainCRTStartup"
+#    )
+#endif()
+
+target_link_libraries(game PRIVATE
+    glfw
+    glad::glad
+    glm::glm
+)
+
+# Для Windows
+if(WIN32)
+    target_link_libraries(game PRIVATE opengl32.lib)
+endif()
